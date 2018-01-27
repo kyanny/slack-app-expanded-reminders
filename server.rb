@@ -7,6 +7,7 @@ post '/' do
   app = App.new
   app.get_expanded_reminders.to_s
 
+  content_type 'application/json'
   {
     "text": "New comic book alert! _The Further Adventures of Slackbot_, Volume 1, Issue 3."
   }.to_json
