@@ -12,13 +12,11 @@ end
 
 post '/action' do
   app = App.new
-  
-  
 
-  require 'pp'
-  pp params
-  puts '='*80
-  puts params
+  payload = params['payload']
+  p payload
+  pp JSON.parse(payload)
+
   'wip'
   #reminder_id = params['']
   #app.complete_reminder()
