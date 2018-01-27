@@ -15,11 +15,13 @@ post '/action' do
 
   puts '='*80
   puts '='*80
-  p params
-  puts '='*80
-  p params['payload']
-  puts '='*80
-  p params[:payload]
+  # p params
+  # puts '='*80
+  # p params['payload']
+  # puts '='*80
+  # p params[:payload]
+  json = JSON.parse(params['payload'])
+  p json['actions'][0]['value']
 
   'wip'
   #reminder_id = params['']
