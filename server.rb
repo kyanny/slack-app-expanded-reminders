@@ -13,9 +13,13 @@ end
 post '/action' do
   app = App.new
 
-  payload = params['payload']
-  p payload
-  puts JSON.parse(payload)
+  puts '='*80
+  puts '='*80
+  p params
+  puts '='*80
+  p params['payload']
+  puts '='*80
+  p params[:payload]
 
   'wip'
   #reminder_id = params['']
