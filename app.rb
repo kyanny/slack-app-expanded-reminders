@@ -43,7 +43,7 @@ class App
             attachments: reminders.map { |(text, message)|
                 msg = "<#{text}|this message> #{message}"
                 {
-                    title: msg,
+                    text: msg,
                     fallback: msg,
                     callback_id: '0',
                     actions: [
