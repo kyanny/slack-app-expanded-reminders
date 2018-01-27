@@ -13,17 +13,11 @@ end
 post '/action' do
   app = App.new
 
-  puts '='*80
-  puts '='*80
-  # p params
-  # puts '='*80
-  # p params['payload']
-  # puts '='*80
-  # p params[:payload]
-  json = JSON.parse(params['payload'])
-  p json['actions'][0]['value']
+  content_type 'application/json'
 
-  'wip'
-  #reminder_id = params['']
-  #app.complete_reminder()
+  reminder_id = JSON.parse(params['payload'])['actions'][0]['value']
+
+  app.complete_reminder(reminder_id)
+
+  app.get_expanded_reminders.to_json
 end
