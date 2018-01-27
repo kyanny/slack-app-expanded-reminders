@@ -23,19 +23,40 @@ class App
                 thread_ts = m[3].to_f / 1000000
                 res = client.conversations_replies(channel: channel, inclusive: true, ts: thread_ts, latest: ts, limit: 1)
                 text = res.messages.last.text
-                [reminder.text, text]
+                format reminder.text, text
             elsif m = reminder.text.match(%r!\Ahttps://quipper\.slack\.com/archives/([^/]*)/p([^/]*)\z!)
                 channel = m[1]
                 ts      = m[2].to_f / 1000000
                 res = client.conversations_history(channel: channel, inclusive: true, latest: ts+0.000001, limit: 1)
                 if res.messages.first.subtype == 'file_share'
                     text = res.messages.first.file.preview
-                    [reminder.text, text]
+                    format reminder.text, text
                 else
                     text = res.messages.first.text
-                    [reminder.text, text]
+                    format reminder.text, text
                 end
             end
+        }
+    end
+
+    def format(text, message)
+        {
+            text: "<#{text}|message> #{message}",
+            attachments: [
+                {
+                    actions: [
+                        {
+                            fallback: "Complete",
+                            actions: {
+                                name: "complete",
+                                text: "Complete",
+                                type: "button",
+                                value: "complete",
+                            }
+                        }
+                    ]
+                }
+            ]
         }
     end
 end

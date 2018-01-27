@@ -5,7 +5,6 @@ require 'json'
 post '/' do
   #'Hello from Expanded reminders'
   app = App.new
-  app.get_expanded_reminders.to_s
 
   content_type 'application/json'
 
@@ -48,4 +47,6 @@ post '/' do
         }
     ]
   }.to_json 
+
+  app.get_expanded_reminders.to_json
 end
