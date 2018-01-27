@@ -41,7 +41,7 @@ class App
         {
             text: "Expanded reminders",
             attachments: reminders.map { |(text, message)|
-                msg = "#{text} #{message}"
+                msg = "<#{text}|this message> #{message}"
                 {
                     text: msg,
                     fallback: msg,
