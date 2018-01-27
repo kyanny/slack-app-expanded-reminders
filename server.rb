@@ -13,7 +13,7 @@ end
 post '/action' do
   app = App.new
   
-  content_type 'application/json'
+  
 
   require 'pp'
   pp params
