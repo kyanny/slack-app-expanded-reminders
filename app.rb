@@ -60,4 +60,4 @@ class App
 end
 
 #pp App.new.get_expanded_reminders
-puts JSON.pretty_generate(App.new.get_expanded_reminders)
+#puts JSON.pretty_generate(App.new.get_expanded_reminders)
