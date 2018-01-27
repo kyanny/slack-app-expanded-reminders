@@ -10,3 +10,7 @@ post '/' do
   
   app.get_expanded_reminders.to_json
 end
+
+post '/action' do
+  p params
+end
