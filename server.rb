@@ -15,7 +15,7 @@ post '/action' do
 
   payload = params['payload']
   p payload
-  pp JSON.parse(payload)
+  puts JSON.parse(payload)
 
   'wip'
   #reminder_id = params['']
