@@ -43,16 +43,14 @@ class App
             attachments: reminders.map { |(text, message)|
                 msg = "#{text} #{message}"
                 {
+                    text: msg,
+                    fallback: msg,
                     actions: [
                         {
-                            text: msg,
-                            fallback: msg,
-                            actions: {
-                                name: "complete",
-                                text: "Complete",
-                                type: "button",
-                                value: "complete",
-                            }
+                            name: "complete",
+                            text: "Complete",
+                            type: "button",
+                            value: "complete",
                         }
                     ]
                 }
@@ -62,3 +60,4 @@ class App
 end
 
 #pp App.new.get_expanded_reminders
+puts JSON.pretty_generate(App.new.get_expanded_reminders)
