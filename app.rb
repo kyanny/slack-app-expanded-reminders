@@ -1,10 +1,6 @@
 require 'slack-ruby-client'
 require 'pp'
 
-Slack.configure do |config|
-  config.token = ENV.fetch('SLACK_API_TOKEN')
-end
-
 class App
     def initialize
         @client = Slack::Web::Client.new
@@ -65,5 +61,10 @@ class App
     end
 end
 
-#pp App.new.get_expanded_reminders
-#puts JSON.pretty_generate(App.new.get_expanded_reminders)
+if __FILE__ == $0
+    Slack.configure do |config|
+        config.token = ENV.fetch('SLACK_API_TOKEN')
+    end
+    #pp App.new.get_expanded_reminders
+    #puts JSON.pretty_generate(App.new.get_expanded_reminders)
+end
