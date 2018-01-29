@@ -13,8 +13,7 @@ end
 get '/callback' do
   redis = Redis.new
   if redis.get('access_token')
-    'not ok'
-    return
+    raise
   end
   
   client_id = ENV.fetch('SLACK_APP_CLIENT_ID')
