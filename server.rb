@@ -11,6 +11,12 @@ get '/' do
 end
 
 get '/callback' do
+  redis = Redis.new
+  if redis.get('access_token')
+    'not ok'
+    return
+  end
+  
   client_id = ENV.fetch('SLACK_APP_CLIENT_ID')
   client_secret = ENV.fetch('SLACK_APP_CLIENT_SECRET')
 
@@ -19,8 +25,7 @@ get '/callback' do
     client_secret: client_secret,
     code: params['code'],
   )
-  pp res
-  redis = Redis.new
+  
   redis.set('access_token', res['access_token'])
 
   'ok'
