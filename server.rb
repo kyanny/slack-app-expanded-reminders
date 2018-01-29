@@ -1,21 +1,36 @@
 require 'sinatra'
 require_relative 'app'
+require 'redis'
 require 'json'
 
 get '/' do
+  client_id = ENV.fetch('SLACK_APP_CLIENT_ID')
+  scope = ENV.fetch('SLACK_APP_SCOPE')
+  @href = "https://slack.com/oauth/authorize?client_id=%s&scope=%s" % [client_id, scope]
+  erb :index
 end
 
 get '/callback' do
+  client_id = ENV.fetch('SLACK_APP_CLIENT_ID')
+  client_secret = ENV.fetch('SLACK_APP_CLIENT_SECRET')
+
   res = Slack::Web::Client.new.oauth_access(
-    client_id: ENV.fetch('SLACK_APP_CLIENT_ID'),
-    client_secret: ENV.fetch('SLACK_APP_CLIENT_SECRET'),
+    client_id: client_id,
+    client_secret: client_secret,
     code: params['code'],
   )
   pp res
+  redis = Redis.new
+  redis.set('access_token', res['access_token'])
+
+  'ok'
 end
 
 post '/' do
-  app = App.new
+  redis = Redis.new
+  access_token = redis.get('access_token')
+
+  app = App.new(access_token: access_token)
 
   content_type 'application/json'
   
@@ -23,7 +38,10 @@ post '/' do
 end
 
 post '/action' do
-  app = App.new
+  redis = Redis.new
+  access_token = redis.get('access_token')
+
+  app = App.new(access_token: access_token)
 
   content_type 'application/json'
 

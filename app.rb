@@ -2,7 +2,12 @@ require 'slack-ruby-client'
 require 'pp'
 
 class App
-    def initialize
+    def initialize(access_token: nil)
+        if access_token
+            Slack.configure do |config|
+                config.token = access_token
+            end
+        end
         @client = Slack::Web::Client.new
     end
     
